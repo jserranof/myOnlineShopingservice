@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="30348ee9-1dd4-49e8-95c6-7651135e199a" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="Obtengo token ADMIN" searchProperties="true" timeout="0">
+  <con:settings id="1d7943d5-4ec2-4d4d-8a25-eac7e87e51ef">
+    <con:setting id="30348ee9-1dd4-49e8-95c6-7651135e199afileName">Obtengo-token-ADMIN</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="login USER" id="4f5e263e-3938-4e53-ac74-3ffa407d292b">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" service="Products Management API" resourcePath="/auth/login" methodName="login" xsi:type="con:RestRequestStep">
+      <con:restRequest name="login USER" id="f63b9cfe-3d0a-4383-a2b2-4d675f1bd254" mediaType="application/json" postQueryString="false">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:endpoint>http://localhost:9090</con:endpoint>
+        <con:request>{\r
+  "email" : "user@email.com",\r
+  "password" : "upass"\r
+}</con:request>
+        <con:originalUri>http://localhost/auth/login</con:originalUri>
+        <con:assertion type="Valid HTTP Status Codes" id="27b37cd5-b236-4af2-a276-ffe90c56a947" name="Valid HTTP Status Codes">
+          <con:settings/>
+          <con:configuration>
+            <codes>200</codes>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="Response SLA Assertion" id="56311612-58bd-4d63-bdfd-9ccb024aedd5" name="Response SLA">
+          <con:configuration>
+            <SLA>200</SLA>
+          </con:configuration>
+        </con:assertion>
+        <con:assertion type="JsonPath RegEx Match" id="85e874b2-cf35-4119-801c-3c3da3c3e14b" name="JSONPath RegEx Match">
+          <con:configuration>
+            <path>$['accessToken']</path>
+            <content>true</content>
+            <allowWildcards>false</allowWildcards>
+            <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+            <ignoreComments>false</ignoreComments>
+            <regEx>.*\..*\..*</regEx>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="transfer" name="actualizar Prop Token" id="2327d782-3148-44d2-8432-dff9f16be453">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:PropertyTransfersStep">
+      <con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false">
+        <con:name>token</con:name>
+        <con:sourceType>Response</con:sourceType>
+        <con:sourceStep>login USER</con:sourceStep>
+        <con:sourcePath>$['accessToken']</con:sourcePath>
+        <con:targetType>token_user</con:targetType>
+        <con:targetStep>#TestCase#</con:targetStep>
+        <con:targetPath/>
+        <con:type>JSONPATH</con:type>
+        <con:upgraded>true</con:upgraded>
+      </con:transfers>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>token_user</con:name>
+      <con:value>eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxLHVzZXJAZW1haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpc3MiOiJjb20ubWljcm9jb21wYW55IiwiaWF0IjoxNzMxNDQ3ODM0LCJleHAiOjE3MzE1MzQyMzR9.x_k1eAjVKxcqKUlYU9nRDYwCzl_Y1E8RYAAjLEUHPD2RfH3PcdGV5VBtWbnyFVXiaimMkqKQ1SzJvyuzlmTzSQ</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>
