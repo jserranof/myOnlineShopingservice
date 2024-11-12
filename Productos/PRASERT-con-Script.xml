@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="e9b2f750-bf2b-491b-9453-6bf28a7d4238" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="PRASERT con Script" searchProperties="true" timeout="0">
+  <con:settings id="3050a522-6a46-4376-b0a7-9ad69674eed4">
+    <con:setting id="e9b2f750-bf2b-491b-9453-6bf28a7d4238fileName">PRASERT-con-Script</con:setting>
+  </con:settings>
+  <con:testStep type="restrequest" name="getAll" id="409d728f-0839-49f2-97d9-386653d1ad5c">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" service="Products Management API" methodName="getAll" resourcePath="/products" xsi:type="con:RestRequestStep">
+      <con:restRequest name="getAll" id="a559b873-e230-4b47-8880-f187819cf26b" mediaType="application/json">
+        <con:settings>
+          <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+        </con:settings>
+        <con:encoding>UTF-8</con:encoding>
+        <con:endpoint>http://localhost:9090</con:endpoint>
+        <con:request/>
+        <con:originalUri>http://localhost/products</con:originalUri>
+        <con:assertion type="GroovyScriptAssertion" id="4e37eb51-6cab-48ce-a099-6585c2a8f979" name="Script Assertion">
+          <con:configuration>
+            <scriptText>/*log.info(messageExchange.responseHeaders["#status#"])
+log.info(messageExchange.response.contentAsString)
+
+def status = messageExchange.responseHeaders["#status#"]
+assert ["HTTP/1.1 401 "] == status
+def jsonResp = (messageExchange.response.contentAsString)
+
+//assert messageExchange.response.contentAsString == null
+assert null == jsonResp
+
+//assert messageExchange.responseHeaders["x-amz-id-1"] != null
+*/
+import ProductUtils
+ProductUtils.validate(messageExchange,log)</scriptText>
+          </con:configuration>
+        </con:assertion>
+        <con:credentials>
+          <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+          <con:authType>No Authorization</con:authType>
+        </con:credentials>
+        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+        <con:parameters/>
+      </con:restRequest>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+  <con:breakPoints>
+    <con:testStepId>156fad68-5ff4-4140-97b4-0d467e1cd146</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+  <con:breakPoints>
+    <con:testStepId>d3c794a8-433f-4ff6-b964-3f487d4528a3</con:testStepId>
+    <con:status>NONE</con:status>
+    <con:properties/>
+  </con:breakPoints>
+</con:testCase>
